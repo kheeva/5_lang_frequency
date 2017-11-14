@@ -23,7 +23,7 @@ def get_most_frequent_words(text):
         if word:
             words_count[word] = words_count.get(word, 0) + 1
 
-    return sorted(words_count.items(), key = lambda x: x[1], reverse = True)[:10]
+    return sorted(words_count.items(), key=lambda x: x[1], reverse=True)[:10]
 
 
 def main():
