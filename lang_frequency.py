@@ -4,14 +4,9 @@ import string
 
 
 def load_data(file_path):
-    try:
-        with open(file_path, 'rb') as text_file:
-            text_data = text_file.read()
-    except FileNotFoundError as error:
-        print(error)
-    else:
-        return text_data
-    return ''
+    with open(file_path, 'rb') as text_file:
+        text_data = text_file.read()
+    return text_data
 
 
 def get_most_frequent_words(text):
@@ -28,11 +23,13 @@ def get_most_frequent_words(text):
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python lang_frequency.py path_to_file.")
-        exit(1)
+        exit("Usage: python lang_frequency.py path_to_file")
+
+    try:
+        loaded_words = load_data(sys.argv[1]).split()
+    except FileNotFoundError as error:
+        exit(error)
     else:
-        loaded_text_file = sys.argv[1]
-        loaded_words = load_data(loaded_text_file).split()
         most_frequent_words = get_most_frequent_words(loaded_words)
 
         for word, count in most_frequent_words:
