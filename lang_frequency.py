@@ -12,8 +12,11 @@ def load_data(file_path):
 
 def get_most_frequent_words(text, words_number):
     delimiters = string.punctuation + ' '
-    counted_words = Counter(map(lambda x: x.strip(delimiters), text.split()))
-    return counted_words.most_common(words_number)
+    counted_words = Counter(map(lambda x: x.strip(delimiters),
+                            filter(lambda x: x not in delimiters,
+                            text.split())))
+    return sorted(counted_words,
+                  key=counted_words.get, reverse=True)[:words_number]
 
 
 def main():
@@ -21,15 +24,17 @@ def main():
         exit("Usage: python lang_frequency.py path_to_file")
 
     try:
-        loaded_words = load_data(sys.argv[1])
+        loaded_text = load_data(sys.argv[1])
     except FileNotFoundError as error:
         exit(error)
     else:
-        most_frequent_words = get_most_frequent_words(loaded_words,
+        most_frequent_words_list = get_most_frequent_words(loaded_text,
                                                       words_number=10)
 
-        for word in most_frequent_words:
-            print(word[0])
+        print('\nThere are ten most frequent words in descending order:')
+
+        for word in most_frequent_words_list:
+            print(' {}'.format(word))
 
 
 if __name__ == '__main__':
