@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 import sys
 import string
+from collections import Counter, OrderedDict
+from itertools import islice
 
 
 def load_data(file_path):
     with open(file_path, 'rb') as text_file:
-        text_data = text_file.read()
+        text_data = text_file.read().decode('utf-8')
     return text_data
 
 
 def get_most_frequent_words(text):
-    words_count = {}
-    words_delimiters = string.punctuation + ' '
-
-    for word in text:
-        word = word.decode('utf-8').strip(words_delimiters).lower()
-        if word:
-            words_count[word] = words_count.get(word, 0) + 1
-
-    return sorted(words_count.items(), key=lambda x: x[1], reverse=True)[:10]
+    delimiters = string.punctuation + ' '
+    counted_words = Counter(map(lambda x: x.strip(delimiters), text.split()))
+    counted_words = OrderedDict(sorted(counted_words.items(),
+                                       key=lambda x: x[1], reverse=True))
+    return OrderedDict(islice(counted_words.items(), 10))
 
 
 def main():
@@ -26,14 +24,14 @@ def main():
         exit("Usage: python lang_frequency.py path_to_file")
 
     try:
-        loaded_words = load_data(sys.argv[1]).split()
+        loaded_words = load_data(sys.argv[1])
     except FileNotFoundError as error:
         exit(error)
     else:
         most_frequent_words = get_most_frequent_words(loaded_words)
 
-        for word, count in most_frequent_words:
-            print('{0:10}\t{1:5}'.format(word, count))
+        for word in most_frequent_words:
+            print(word)
 
 
 if __name__ == '__main__':

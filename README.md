@@ -15,9 +15,16 @@ python lang_frequency.py path_to_text_file
 
 You can see the result in concole:
 ```
-3word     	    3
-2word     	    2
-1word     	    1
+dog
+dolphin
+cat
+fish
+parrot
+monkey
+elephant
+eagle
+snake
+bee
 ```
 
 # Project Goals
