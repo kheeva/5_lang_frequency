@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import sys
 import string
-from collections import Counter, OrderedDict
-from itertools import islice
+from collections import Counter
 
 
 def load_data(file_path):
@@ -14,9 +13,7 @@ def load_data(file_path):
 def get_most_frequent_words(text):
     delimiters = string.punctuation + ' '
     counted_words = Counter(map(lambda x: x.strip(delimiters), text.split()))
-    counted_words = OrderedDict(sorted(counted_words.items(),
-                                       key=lambda x: x[1], reverse=True))
-    return OrderedDict(islice(counted_words.items(), 10))
+    return counted_words.most_common(10)
 
 
 def main():
@@ -31,7 +28,7 @@ def main():
         most_frequent_words = get_most_frequent_words(loaded_words)
 
         for word in most_frequent_words:
-            print(word)
+            print(word[0])
 
 
 if __name__ == '__main__':
