@@ -12,11 +12,9 @@ def load_data(file_path):
 
 def get_most_frequent_words(text, words_number):
     delimiters = string.punctuation + ' '
-    counted_words = Counter(map(lambda x: x.strip(delimiters),
-                            filter(lambda x: x not in delimiters,
-                            text.split())))
-    return sorted(counted_words,
-                  key=counted_words.get, reverse=True)[:words_number]
+    counted_words = Counter(map(lambda x: x.strip(delimiters), filter(
+        lambda x: x and x[0] and x[-1] not in delimiters, text.split())))
+    return dict(counted_words.most_common(words_number))
 
 
 def main():
@@ -28,12 +26,9 @@ def main():
     except FileNotFoundError as error:
         exit(error)
     else:
-        most_frequent_words_list = get_most_frequent_words(loaded_text,
-                                                      words_number=10)
-
         print('\nThere are ten most frequent words in descending order:')
 
-        for word in most_frequent_words_list:
+        for word in get_most_frequent_words(loaded_text, words_number=10):
             print(' {}'.format(word))
 
 
