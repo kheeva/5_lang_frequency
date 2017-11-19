@@ -10,19 +10,6 @@ def load_data(file_path):
     return text_data
 
 
-'''
-If you want to calculate a compound word as an one-whole-word use the function
-below instead of current function get_most_frequent_words().
-
-def get_most_frequent_words(text, words_number):
-    regex_word = re.compile(r'(?P<all>[^\W\d_]+(-[^\W\d_]+)?)')
-    words = []
-    for matched_groups in [x for x in re.finditer(regex_word, text.lower())]:
-        words.append(matched_groups.group('all'))
-    return [word for word, count in Counter(words).most_common(words_number)]
-'''
-
-
 def get_most_frequent_words(text, words_number):
     regex_word = re.compile(r'[^\W\d_]+')
     words = re.findall(regex_word, text.lower())
