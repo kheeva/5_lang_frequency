@@ -11,7 +11,7 @@ def load_data(file_path):
 
 
 '''
-If you want to calculate a compound word as an one whole word use the function
+If you want to calculate a compound word as an one-whole-word use the function
 below instead of current function get_most_frequent_words().
 
 def get_most_frequent_words(text, words_number):
